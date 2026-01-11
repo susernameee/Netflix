@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Accedi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        @font-face {
+            font-family: 'NetflixSans';
+            src: url('font/NetflixSans-Regular.otf') format('opentype');
+            font-weight: normal;
+        }
+        @font-face {
+            font-family: 'NetflixSans';
+            src: url('font/NetflixSans-Bold.otf') format('opentype');
+            font-weight: bold;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'NetflixSans', Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background-image: url("assets/netflix.webp");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+        }
+
+        /* Logo */
+        .logo {
+            position: absolute;
+            top: -80px;
+            left: 370px;
+            z-index: 2;
+        }
+
+        .logo img {
+            height: 47px;
+            filter: drop-shadow(0 2px 6px rgba(0,0,0,0.7));
+        }
+
+        /* Login box */
+        .login-box {
+            width: 100%;
+            max-width: 480px;
+            background: rgba(0,0,0,0.78);
+            margin: 100px auto 90px;
+            padding: 50px 68px 80px;
+            border-radius: 6px;
+            color: #fff;
+        }
+
+        .login-box h1 {
+            margin-bottom: 28px;
+            font-size: 32px;
+            font-weight: 780;
+        }
+
+        /* Floating label input */
+        .login-box .input-group {
+            position: relative;
+            margin-bottom: 13px;
+        }
+
+        .login-box .input-group input {
+            width: 100%;
+            height: 54px;
+            padding: 18px 15px 5px 15px;
+            background: rgba(20,20,20,0.7);
+            border: 1px solid #666;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 16px;
+        }
+
+        .login-box .input-group label {
+            position: absolute;
+            top: 50%;
+            left: 15px;
+            transform: translateY(-50%);
+            color: #b3b3b3;
+            font-size: 16px;
+            pointer-events: none;
+            transition: 0.2s ease all;
+        }
+
+        .login-box .input-group input:focus + label,
+        .login-box .input-group input:not(:placeholder-shown) + label {
+            top: 14px;
+            left: 10px;
+            font-size: 13px;
+            color: #b3b3b3;
+        }
+
+        /* Pulsante principale rosso */
+        .login-box .primary-btn {
+            width: 100%;
+            height: 41px;
+            background: #e50914;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 2px;
+            transition: background 0.3s;
+        }
+
+        .login-box .primary-btn:hover {
+            background: #f6121d;
+        }
+
+        /* Testo “OPPURE” */
+        .login-box .alternative {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 15.2px;
+            font-weight: normal;
+            color: #b3b3b3;
+        }
+
+        /* Bottone secondario grigio semitrasparente */
+        .login-box .secondary-btn {
+            width: 100%;
+            height: 41px;
+            background: rgba(128,128,128,0.5);
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: normal;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .login-box .secondary-btn:hover {
+            background: rgba(128,128,128,0.7);
+        }
+
+        /* Link password */
+        .login-box .forgot-password {
+            text-align: center;
+            margin-top: 16px;
+        }
+
+        .login-box .forgot-password a {
+            color: #fff;
+            font-size: 16px;
+            text-decoration: underline;
+        }
+
+        /* Checkbox “Ricordami” ingrandita */
+        .login-box .remember-me {
+            margin-top: 19px;
+            text-align: left;
+        }
+
+        .remember-me label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 15px;
+            color: #fff;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .remember-me input[type="checkbox"] {
+            display: none;
+        }
+
+        .remember-me .custom-checkbox {
+            width: 21px; /* ingrandita di 3px */
+            height: 21px; /* ingrandita di 3px */
+            background-color: #000;
+            border: 1.5px solid #666;
+            border-radius: 3px;
+            position: relative;
+        }
+
+        .remember-me input[type="checkbox"]:checked + .custom-checkbox {
+            background-color: #fff;
+            border-color: #000;
+            border-radius: 3px;
+        }
+
+        .remember-me input[type="checkbox"]:checked + .custom-checkbox::after {
+            content: "";
+            position: absolute;
+            top: 5px; /* centrata verticale */
+            left: 6px; /* spostata leggermente a destra */
+            width: 3px;
+            height: 6px;
+            border: solid #000;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        /* Registrazione */
+        .login-box .signup {
+            margin-top: 20px;
+            color: #b3b3b3;
+            font-size: 16px;
+            font-weight: normal;
+            text-align: left;
+        }
+         .login-box .signup a {
+            color: #fff; /* Colore del testo bianco */
+            font-weight: normal;
+            text-decoration: none; /* Rimuove la sottolineatura di default */
+            transition: text-decoration 0.3s ease;
+        }
+        
+         .login-box .signup a:hover {
+            color: #fff;
+            font-weight: normal;
+            text-decoration: underline;
+        }
+
+        /* reCAPTCHA */
+        .login-box .captcha {
+            margin-top: 15px;
+            font-size: 13px;
+            color: #8c8c8c;
+            text-align: left;
+        }
+
+        /* Scopri di più */
+        .login-box .more-info {
+            margin-top: 10px;
+            font-size: 13px;
+            text-align: left;
+        }
+
+        .login-box .more-info a {
+            color: #0071eb;
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        .footer {
+            background: #161616;
+            color: #b3b3b3;
+            padding: 70px 18% 120px;
+            min-height: auto;
+            padding-bottom: 110px;
+            font-size: 16px;
+        }
+
+         .footer-links a {
+             font-size: 14px; 
+             color: #b3b3b3; 
+             text-decoration: underline !important;
+        
+        }
+
+        .footer-top {
+            margin-bottom: 30px;
+        }
+
+        .footer-top a {
+            color: #b3b3b3;
+            text-decoration: none;
+        }
+
+        .footer-links {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .footer-links a {
+            color: #b3b3b3;
+            text-decoration: none;
+        }
+
+        .language {
+            background: #161616;
+            color: #FFFFFF;
+            border: 1px solid #b3b3b3;
+            padding: 4px 20px;
+            border-radius: 4px;
+            font-size: 16px;
+            width: 120px;
+        }
+
+        /* Mobile */
+        @media (max-width: 600px) {
+            .logo {
+                left: 20px;
+            }
+
+            .login-box {
+                padding: 40px 30px;
+            }
+
+            .footer {
+                padding: 30px;
+            }
+
+            .footer-links {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="logo">
+        <img src="assets/logo.png" alt="Logo">
+    </div>
+
+    <div class="login-box">
+        <h1>Accedi</h1>
+
+        <div class="input-group">
+            <input type="email" id="email" placeholder=" " required>
+            <label for="email">Indirizzo email o numero di cellulare</label>
+        </div>
+
+        <div class="input-group">
+            <input type="password" id="password" placeholder=" " required>
+            <label for="password">Password</label>
+        </div>
+
+        <button class="primary-btn">Accedi</button>
+
+        <div class="alternative">OPPURE</div>
+
+        <button class="secondary-btn">Usa un codice di accesso</button>
+
+        <!-- Link password -->
+        <div class="forgot-password">
+            <a href="#">Hai dimenticato la password?</a>
+        </div>
+
+        <!-- Checkbox Ridisegnata -->
+        <div class="remember-me">
+            <label>
+                <input type="checkbox">
+                <span class="custom-checkbox"></span>
+                Ricordami
+            </label>
+        </div>
+
+        <div class="signup">
+            Prima volta su Netflix? <a href="#">Registrati ora.</a>
+        </div>
+
+        <div class="captcha">
+            Questa pagina è protetta da Google reCAPTCHA per garantire che tu non sia un bot.
+        </div>
+
+        <div class="more-info">
+            <a href="#">Scopri di più.</a>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p class="footer-top">
+            Domande? Chiama il numero verde <a href="#">800 931 413</a>
+        </p>
+
+        <div class="footer-links">
+            <a href="#">Domande frequenti</a>
+            <a href="#">Centro assistenza</a>
+            <a href="#">Condizioni di utilizzo</a>
+            <a href="#">Privacy</a>
+            <a href="#">Preferenze per i cookie</a>
+            <a href="#">Informazioni sull'azienda</a>
+            <a href="#">Preferenze per la pubblicità</a>
+        </div>
+
+        <select class="language">
+            <option>Italiano</option>
+            <option>English</option>
+        </select>
+    </footer>
+
+    <script>
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+
+        emailInput.addEventListener('blur', () => {
+            if (emailInput.value.length < 5) {
+                emailInput.style.borderColor = '#e50914'; // rosso Netflix
+            } else {
+                emailInput.style.borderColor = '#666';
+            }
+        });
+
+        passwordInput.addEventListener('blur', () => {
+            if (passwordInput.value.length < 4) {
+                passwordInput.style.borderColor = '#e50914';
+            } else {
+                passwordInput.style.borderColor = '#666';
+            }
+        });
+    </script>
+
+</body>
+</html>
